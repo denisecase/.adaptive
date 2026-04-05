@@ -1,0 +1,38 @@
+# ============================================================
+# .agent/ao-context-node.toml
+# ============================================================
+
+[meta]
+produced_by = "OpenAI ChatGPT"
+produced_on = "2026-04-05"
+source_mode = "declared-first"
+inferred = [
+  "defaults.node",
+  "defaults.node.tools",
+  "defaults.node.versioning",
+  "defaults.node.norms",
+]
+gaps = [
+  "No direct Node project evidence was inspected in-session; this layer reflects declared tooling preferences rather than observed repository behavior.",
+]
+divergences = []
+
+[defaults.node]
+runtime = "node"
+package_manager = "npm"
+npx_usage = "preferred for CLI tools"
+
+[defaults.node.tools]
+use_npx_for_cli = true
+prefer_ephemeral_tools = true
+avoid_global_installs = true
+
+[defaults.node.versioning]
+npx_resolution = "latest"
+explicit_version_required = false
+allow_version_pinning = false
+
+[defaults.node.norms]
+npx_always_latest = "invoke tools as 'npx <tool>@latest' when reproducibility is not required"
+no_global_tool_state = "do not rely on globally installed npm packages"
+upgrade_on_use = "prefer execution-time resolution over pre-installed versions"

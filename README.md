@@ -21,6 +21,152 @@ This project fetches current versions of key adaptive-interfaces skills and uses
 - Hand-written conventions stored in `.agent/ao-config.toml`
 - Agent-assessed conventions stored in `.agent/ao-context.toml`
 
+## Agent Options for Updating Conventions
+
+### Claude Code (works)
+
+Included with a Claude Pro subscription ($20/month).
+Terminal CLI that reads your repo, makes real HTTP calls, writes files,
+and executes commands.
+This is a good tool for running the update.
+
+Install:
+
+```shell
+npm install -g @anthropic-ai/claude-code
+```
+
+### OpenAI Codex CLI (ChatGPT)
+
+Terminal CLI that can inspect your repository, edit files, and run commands.
+You can authenticate with your ChatGPT account or an OpenAI API key.
+This is a good tool for generating or refreshing ao-context*.toml
+from vendored skills and local repository evidence.
+NOT included with a Plus subscription ($20/month).
+API usage is billed separately from ChatGPT subscriptions 
+when you use an API key.
+
+Install:
+
+```shell
+npm install -g @openai/codex
+```
+
+### GitHub Copilot
+
+Good for inline code suggestions while editing.
+Not suitable for full convention refresh workflows that need
+deep repository inspection, file writes, and controlled artifact generation.
+
+## Run Requirements (Chat is not enough)
+
+Updates require an agent with:
+
+- file system access (read/write repository files)
+- ability to follow multi-step instructions
+- sufficient context window to process skills + repo state
+
+Chat-based interfaces are useful for reviewing and refining skills,
+but cannot execute updates because they do not operate on your local file system.
+
+
+## Run Update (with Claude Code)
+
+From the repository root, start a session:
+
+```shell
+claude
+```
+
+Select your authorization (e.g. Option 1) and it will open a browser to authenticate against your pro account.
+After auth is successful, follow the terminal prompts, e.g. "Login successful. Press Enter to continue…".
+Accept the notice (hit Enter).
+When asked " Use Claude Code's terminal setup?" chose your option (e.g., 1 or Enter to confirm).
+When asked "Is this a project you created or one you trust?", chose your option (e.g., 1 or Enter to confirm).
+Then in the session, paste the instructions:
+
+```shell
+─────────────────────────────────────────────────────────────────────────
+❯ Read ./skills/adaptive-conformance-specification/SKILL.md
+then read ./skills/adaptive-onboarding/SKILL.md
+then follow prompt.md
+─────────────────────────────────────────────────────────────────────────
+```
+
+Read questions and answer or Hit Enter to accept default until done.
+After the response finishes:
+
+1. Review any new .agent/ao-context*.toml files.
+
+## Run Update (with OpenAI Codex)
+
+From the repository root, start a session:
+
+```shell
+codex
+```
+
+Authenticate when prompted:
+
+- Sign in with your ChatGPT account, or
+- Provide an OpenAI API key
+
+Follow the terminal prompts until you reach the interactive session.
+Then at the Codex prompt, paste the instructions
+
+```shell
+Read ./skills/adaptive-conformance-specification/SKILL.md
+then read ./skills/adaptive-onboarding/SKILL.md
+then read ./prompt.md
+then execute the AO process to generate or update .agent/ao-context.toml
+
+Constraints:
+- Treat .agent/ao-config*.toml as authoritative and read-only
+- Only write or modify .agent/ao-context*.toml
+- Do not modify source files outside .agent/
+- Prefer existing repository patterns over external assumptions
+```
+
+### During execution
+
+- Answer clarification questions if prompted  
+- Otherwise press Enter to accept defaults  
+
+The agent should:
+
+1. Read vendored skills from `skills/`
+2. Inspect the repository structure and conventions
+3. Reconcile declared conventions (`ao-config`) with observed patterns
+4. Generate or update `.agent/ao-context.toml`
+
+### After completion
+
+Review outputs carefully:
+
+- Inspect changes in `.agent/ao-context.toml`
+- Confirm alignment with declared conventions in `.agent/ao-config.toml`
+- Reject or adjust any incorrect inferences
+
+Suggested workflow:
+
+```shell
+git diff .agent/
+```
+
+If acceptable:
+
+```shell
+git add .agent
+git commit -m "chore: refresh agent context"
+```
+
+### Notes
+
+- `ao-config*.toml` is human-authored and authoritative  
+- `ao-context*.toml` is agent-generated and replaceable  
+- Do not allow agents to overwrite config files  
+- Regenerate context periodically or when conventions change
+
 ## Human-Written Config and Agent-Written Context
 
 This repository separates declared conventions from agent-generated observations.
