@@ -13,9 +13,17 @@ Uses the methodology defined in
 [Adaptive Interfaces](https://github.com/adaptive-interfaces),  
 which provides engineering discipline for designing agent context to produce consistent, convention-aligned output.
 
+Conventions are specified in [.agent/](./.agent/):
+
+- Some are hand written (`ao-config*.toml`)
+- Some are agent written (`ao-context*.toml`)
+-
+
 ## This Project
 
-This project fetches current versions of key adaptive-interfaces skills and uses them to define, maintain, and update conventions.
+This project fetches current versions of key
+adaptive-interfaces skills and uses them
+to define, maintain, and update conventions.
 
 - Vendored skill inputs stored in `skills/<skill-name>/SKILL.md`
 - Hand-written conventions stored in `.agent/ao-config.toml`
