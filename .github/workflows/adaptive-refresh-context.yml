@@ -1,0 +1,69 @@
+# ============================================================
+# .github/workflows/adaptive-refresh-context.yml (Maintenance)
+# ============================================================
+# WHY-FILE: Periodically refresh agent context artifacts from vendored
+# skill definitions in skills/ using the AO process.
+# REQ: This workflow MUST run on a schedule and be manually triggerable.
+# REQ: It MUST use least privileges.
+# REQ: It MUST only update generated files in .agent/ based on vendored skills.
+# OBS: This workflow is separate from CI to avoid side effects and maintain
+# clear separation of concerns.
+
+name: Refresh Agent Context
+
+# WHY: Keep generated agent context artifacts aligned with current vendored skills.
+# OBS: This workflow updates generated artifacts and is not validation-only.
+
+on:
+  schedule:
+    - cron: "15 6 * * 0" # WHY: Run weekly on Sunday at 06:15 UTC after skill fetch.
+  workflow_dispatch: # WHY: Allow manual triggering from Actions tab.
+
+permissions: # WHY: Use least privileges required.
+  contents: write # WHY: Needed to commit refreshed .agent artifacts.
+
+jobs:
+  refresh:
+    name: Refresh agent context
+    runs-on: ubuntu-latest # WHY: Linux environment is standard for automation.
+    timeout-minutes: 15 # WHY: Prevent hanging jobs; refresh should complete quickly.
+
+    steps:
+      # ============================================================
+      # ASSEMBLE: Get code
+      # ============================================================
+
+      - name: A1) Checkout repository code
+        # WHY: Needed to read vendored skills and write refreshed .agent artifacts.
+        uses: actions/checkout@v6
+
+      - name: A2) Configure Git identity
+        # WHY: Required so automated commits have a clear author identity.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # ============================================================
+      # REFRESH: Regenerate agent context artifacts
+      # ============================================================
+
+      - name: R1) Run AO refresh
+        # WHY: Regenerate .agent artifacts from vendored skill definitions in skills/.
+        run: |
+          # invoke this skill via Claude Code or equivalent agent runner
+          echo "AO refresh: implement with your agent runner"
+
+      # ============================================================
+      # COMMIT: Persist changes if needed
+      # ============================================================
+
+      - name: C1) Commit refreshed agent artifacts if changed
+        # WHY: Record refresh only when generated artifact content actually changed.
+        run: |
+          git add .agent
+          if git diff --cached --quiet; then
+            echo "No agent context updates found."
+          else
+            git commit -m "chore: refresh agent context"
+            git push
+          fi

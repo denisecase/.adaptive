@@ -1,0 +1,42 @@
+# ============================================================
+# CITATION.cff (How to cite this project)
+# ============================================================
+
+# REQ.UNIVERSAL: Professional open projects SHOULD include CITATION.cff.
+# WHY: Support correct citation and attribution.
+# ALT: Internal or private repositories may omit citation metadata.
+# CUSTOM: Update author, repository, license, and keyword fields as needed.
+# USAGE: See https://citation-file-format.github.io/ for details.
+
+cff-version: "1.2.0"
+type: software
+
+title: "adaptive-guide: How to Structure Agent Context for Team-Conforming Output"
+date-released: "2026-03-31"
+
+authors:
+  - family-names: Case
+    given-names: Denise M.
+    orcid: "https://orcid.org/0000-0001-6165-7389"
+    affiliation: "Northwest Missouri State University, USA"
+
+repository-code: "https://github.com/adaptive-interfaces/adaptive-guide"
+url: "https://github.com/adaptive-interfaces/adaptive-guide"
+license: MIT
+
+abstract: |
+  A guide for structuring agent context to ensure team-conforming output.
+  Provides best practices for writing priors, evaluating agent output, and
+  collaborating effectively with intelligent systems.
+
+keywords:
+  - agent engineering
+  - tool discovery
+  - capability mapping
+  - LLM agents
+  - MCP servers
+  - AI-assisted development
+  - skill specification
+  - tool registry
+
+message: "If using this project, please cite it as described in this file."

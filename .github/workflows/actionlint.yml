@@ -1,0 +1,20 @@
+# ============================================================
+# .github/workflows/actionlint.yml (GitHub Actions Lint)
+# ============================================================
+# WHY: Calls org-level action; maintained centrally
+
+name: Actionlint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    uses: adaptive-interfaces/.github/.github/workflows/actionlint.yml@main

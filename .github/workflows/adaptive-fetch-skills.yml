@@ -1,0 +1,101 @@
+# ============================================================
+# .github/workflows/adaptive-fetch-skills.yml (Maintenance)
+# ============================================================
+# WHY-FILE: Periodically fetch adaptive skills from upstream repositories
+# and refresh the local skills/ directory.
+# REQ: This workflow MUST run on a schedule and be manually triggerable.
+# REQ: It MUST use least privileges and only update skills/ based on the source repos.
+# REQ: It MUST vendor only the root SKILL.md from each source repository.
+# OBS: This workflow is separate from CI to avoid side effects and maintain
+# clear separation of concerns.
+#
+# SOURCES:
+# ACS: https://github.com/adaptive-interfaces/adaptive-conformance-specification
+# AO: https://github.com/adaptive-interfaces/adaptive-onboarding
+
+name: Adaptive Fetch Skills
+
+# WHY: Keep local skill inputs aligned with their upstream canonical sources.
+# OBS: This workflow updates vendored skill artifacts and is not validation-only.
+
+on:
+  schedule:
+    - cron: "0 6 * * 0" # WHY: Run weekly on Sunday at 06:00 UTC.
+  workflow_dispatch: # WHY: Allow manual triggering from Actions tab.
+
+permissions: # WHY: Use least privileges required.
+  contents: write # WHY: Needed to commit refreshed skill files.
+
+jobs:
+  fetch:
+    name: Fetch adaptive skills
+    runs-on: ubuntu-latest # WHY: Linux environment is standard for automation.
+    timeout-minutes: 15 # WHY: Prevent hanging jobs; this fetch should complete quickly.
+
+    steps:
+      # ============================================================
+      # ASSEMBLE: Get code
+      # ============================================================
+
+      - name: A1) Checkout repository code
+        # WHY: Needed to read current skills/ content and write updates.
+        uses: actions/checkout@v6
+
+      - name: A2) Configure Git identity
+        # WHY: Required so automated commits have a clear author identity.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # ============================================================
+      # FETCH: Retrieve upstream skill sources
+      # ============================================================
+
+      - name: F1) Create temporary workspace
+        # WHY: Keep upstream clones isolated from the working tree.
+        run: mkdir -p .tmp
+
+      - name: F2) Clone Adaptive Conformance Specification
+        # WHY: Fetch canonical ACS skill source repository.
+        run: |
+          git clone --depth 1 https://github.com/adaptive-interfaces/adaptive-conformance-specification.git .tmp/acs
+
+      - name: F3) Clone Adaptive Onboarding
+        # WHY: Fetch canonical AO skill source repository.
+        run: |
+          git clone --depth 1 https://github.com/adaptive-interfaces/adaptive-onboarding.git .tmp/ao
+
+      # ============================================================
+      # SYNC: Refresh local skill artifacts
+      # ============================================================
+
+      - name: S1) Ensure local skill directories exist
+        # WHY: Target directories must exist before copying skill files.
+        run: |
+          mkdir -p skills/adaptive-conformance-specification
+          mkdir -p skills/adaptive-onboarding
+
+      - name: S2) Copy ACS SKILL.md
+        # WHY: Vendor only the canonical ACS skill artifact, not the full repository.
+        run: |
+          cp .tmp/acs/SKILL.md skills/adaptive-conformance-specification/SKILL.md
+
+      - name: S3) Copy AO SKILL.md
+        # WHY: Vendor only the canonical AO skill artifact, not the full repository.
+        run: |
+          cp .tmp/ao/SKILL.md skills/adaptive-onboarding/SKILL.md
+
+      # ============================================================
+      # COMMIT: Persist changes if needed
+      # ============================================================
+
+      - name: C1) Commit refreshed skill files if changed
+        # WHY: Record upstream refresh only when skill content actually changed.
+        run: |
+          git add skills
+          if git diff --cached --quiet; then
+            echo "No skill updates found."
+          else
+            git commit -m "chore: refresh adaptive skills"
+            git push
+          fi

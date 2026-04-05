@@ -1,0 +1,35 @@
+# .agent/ao-config-node.toml
+# Adaptive Onboarding (AO)
+# Team-Provided Input Configuration
+# Node / JavaScript Layer
+# https://github.com/adaptive-interfaces/adaptive-onboarding
+# Extends ao-config.toml for Node-based tooling and repositories.
+# Applied after ao-config.toml.
+# Defines conventions for Node tool usage, especially CLI execution.
+
+[defaults.node]
+runtime = "node"
+package_manager = "npm"
+npx_usage = "preferred for CLI tools"
+confirmed = true
+
+[defaults.node.tools]
+# WHY: Prefer ephemeral tool execution to avoid stale global installs.
+use_npx_for_cli = true
+prefer_ephemeral_tools = true
+avoid_global_installs = true
+confirmed = true
+
+[defaults.node.versioning]
+# WHY: Always use the latest available CLI tool version when executing via npx.
+npx_resolution = "latest"
+explicit_version_required = false
+allow_version_pinning = false
+confirmed = true
+
+[defaults.node.norms]
+# WHY: Ensure consistent behavior across environments and avoid tool drift.
+npx_always_latest = "invoke tools as 'npx <tool>@latest' when reproducibility is not required"
+no_global_tool_state = "do not rely on globally installed npm packages"
+upgrade_on_use = "prefer execution-time resolution over pre-installed versions"
+confirmed = true

@@ -1,0 +1,44 @@
+# ============================================================
+# .github/workflows/md-lint.yml (Continuous Integration)
+# ============================================================
+# WHY-FILE: Repository hygiene for org-level markdown and schema docs.
+
+name: Markdown Lint
+
+# WHY: Validate repository hygiene on PRs and pushes.
+# OBS: This workflow validates only.
+
+on:
+  push:
+    branches: [main] # WHY: Run when pushing to main branch.
+  pull_request:
+    branches: [main] # WHY: Run on pull requests targeting main branch.
+  workflow_dispatch: # WHY: Allow manual triggering from Actions tab.
+
+permissions: # WHY: Use least privileges required.
+  contents: read
+
+jobs:
+  lint:
+    name: Markdown lint
+    runs-on: ubuntu-latest # WHY: Linux environment is standard for CI.
+    timeout-minutes: 10 # WHY: Prevent hanging jobs; markdown lint completes well under this.
+
+    steps:
+      # ============================================================
+      # ASSEMBLE: Get code
+      # ============================================================
+
+      - name: A1) Checkout repository code
+        # WHY: Needed to access files for checks.
+        uses: actions/checkout@v6
+
+      # ============================================================
+      # BASIC CHECKS: Markdown
+      # ============================================================
+
+      - name: B1) Lint markdown files
+        # WHY: Enforce consistent formatting in normative schema docs and README.
+        uses: DavidAnson/markdownlint-cli2-action@v23
+        with:
+          globs: "**/*.md"

@@ -1,0 +1,59 @@
+# ============================================================
+# .adaptive/MANIFEST.toml
+# ============================================================
+
+schema = "adaptive-interfaces-manifest-1"
+schema_url = "https://github.com/adaptive-interfaces/.github/blob/main/schemas/adaptive-interfaces-manifest-1.md"
+
+[meta]
+framework = "Adaptive Interfaces"
+framework_url = "https://github.com/adaptive-interfaces"
+framework_note = "Provides definitions and conventions for adaptive-interfaces manifest semantics."
+description = "Declarative claim of repository intent, scope, and role."
+purpose = "To make explicit the boundaries, responsibilities, and expectations of this repository relative to others."
+
+[repo]
+name = ".adaptive"
+kind = "repo"
+description = "Maintains conventions, vendored skills, and generated agent context for agent-assisted engineering."
+[layer]
+space = "Agent-Assisted Engineering"
+role = "conventions and context maintenance for agent-assisted engineering"
+
+[depends]
+required = []
+optional = [
+  "adaptive-conformance-specification",
+  "adaptive-onboarding",
+]
+
+[provides]
+artifacts = [
+  ".agent/",
+  ".github/workflows/adaptive-fetch-skills.yml",
+  ".github/workflows/adaptive-refresh-context.yml",
+  "skills/",
+  "ANNOTATIONS.md",
+  "CITATION.cff",
+  "LICENSE",
+  "MANIFEST.toml",
+  "README.md",
+]
+
+[scope]
+includes = [
+  "declared conventions for agent-assisted engineering",
+  "vendored skill inputs used to maintain local agent context",
+  "generated agent context artifacts derived from local conventions and vendored skills",
+  "workflow automation for refreshing skills and agent context",
+]
+excludes = [
+  "canonical skill specifications maintained in upstream adaptive-interfaces repositories",
+  "tool capability registries defined outside this repository",
+  "domain-specific sensor or test logic",
+  "model training or fine-tuning",
+]
+
+[citation]
+cff = "CITATION.cff"
+preferred = "repo"

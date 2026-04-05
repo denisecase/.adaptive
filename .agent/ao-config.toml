@@ -1,0 +1,38 @@
+# ============================================================
+# ao/ao-config.toml
+# ============================================================
+# WHY-FILE: Base defaults for Adaptive Onboarding.
+# REQ: These are declared conventions and take precedence over
+# observed conventions where explicitly stated.
+# OBS: Language- and type-specific files may extend or override these defaults.
+
+[repo]
+type = "general"
+primary_language = ["toml","md","yml"]
+
+[alignment]
+best_practices_stance = "balanced"
+
+[conventions]
+naming = "descriptive, explicit, consistent with existing repository patterns"
+structure = "prefer professional repository structure with clear separation of concerns"
+style_enforced_by = "repository-local tooling and CI when present"
+commit_style = "not globally enforced"
+comment_style = "explicit, inspectable, professional"
+
+[done]
+definition = "code conforms to repository conventions, passes configured checks, and is suitable for review"
+review_required = true
+ci_must_pass = true
+deploy_process = "repository-specific"
+
+[ownership]
+model = "single-maintainer or small-team by repository"
+
+[norms]
+inspect_before_acting = true
+prefer_local_patterns_over_external_preferences = true
+explicit_reasoning_required = true
+
+[sources]
+default_mode = "declared-first"

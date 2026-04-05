@@ -1,0 +1,45 @@
+# .agent/ao-config-python-pypi.toml
+# Adaptive Onboarding (AO)
+# Team-Provided Input Configuration
+# Python
+# PyPI Layer
+# https://github.com/adaptive-interfaces/adaptive-onboarding
+# Extends ao-config-python.toml for PyPI-published Python repositories.
+# Applied after ao-config.toml and ao-config-python.toml.
+# Adds or overrides conventions specific to published packages.
+
+[defaults.python.pypi]
+versioning = "hatch-vcs"          # WHY: Version derived from git tags at build time.
+version_source = "vcs"
+fallback_version = "0.1.0"
+tag_pattern = "^(?:v)?(?P<version>\\d+\\.\\d+\\.\\d+)$"
+version_file = "repository-specific"  # WHY: Concrete path depends on the package name.
+dynamic_version = true            # WHY: version field is dynamic in pyproject.toml
+confirmed = true
+
+[defaults.python.pypi.publishing]
+registry = "pypi"
+trusted_publishing = true         # WHY: OIDC-based publishing; no stored API tokens.
+build_artifacts = ["sdist", "wheel"]
+twine_check = true                # WHY: Validate artifacts before publishing.
+confirmed = true
+
+[defaults.python.pypi.package]
+py_typed_marker = true            # WHY: Required to signal typed package to type checkers.
+all_exports_explicit = true       # WHY: __all__ required in public modules.
+changelog_required = true
+confirmed = false
+
+[defaults.python.pypi.versioning_policy]
+# WHY: SemVer drives consumer expectations for published packages.
+semver = true
+major = "breaking API or schema changes"
+minor = "backward-compatible additions"
+patch = "clarifications, docs, tooling, bug fixes"
+confirmed = true
+
+[defaults.python.pypi.norms]
+no_breaking_changes_in_patch = "patch releases must not break existing consumers"
+deprecation_before_removal = "mark deprecated before removing in next major version"
+release_via_tag = "tag vX.Y.Z to trigger release workflow; do not publish manually"
+confirmed = true

@@ -1,0 +1,44 @@
+# .agent/ao-config-python-scaffold.toml
+# Adaptive Onboarding (AO)
+# Team-Provided Input Configuration
+# Python
+# Scaffold Layer
+# https://github.com/adaptive-interfaces/adaptive-onboarding
+# Extends ao-config-python.toml for course scaffold repositories.
+# Applied after ao-config.toml and ao-config-python.toml.
+# Relaxes standards that are intentionally simplified for course scaffold repositories.
+# Entries here OVERRIDE the python layer where they conflict.
+
+[defaults.python.code_style]
+# WHY: Scaffold repos intentionally omit advanced tooling to reduce student friction.
+max_function_lines = 0            # WHY: Not enforced in scaffold repositories.
+max_cyclomatic_complexity = 0     # WHY: Not enforced in scaffold repositories.
+type_annotations = "optional; encouraged but not required"
+docstring_required_on = "public functions preferred; not strictly required"
+confirmed = false
+
+[defaults.python.testing]
+# WHY: Scaffold repos are starting points; tests are added by students.
+coverage_threshold = 0            # WHY: Not enforced.
+test_location = "tests/"          # WHY: Present if tests exist; may be absent.
+confirmed = false
+
+[defaults.python.security]
+bandit_enabled = false            # WHY: Scaffold repos do not run security scanning.
+deptry_enabled = false            # WHY: Scaffold repos do not run dependency hygiene checks.
+confirmed = true
+
+[defaults.python.scaffold]
+# WHY: Captures scaffold-specific intent for agent context.
+audience = "students"
+purpose = "starting point; students fork and extend"
+intentional_simplifications = true
+no_changelog = true               # WHY: Scaffold repos do not maintain changelogs.
+no_pypi_publishing = true         # WHY: Scaffold repos are not published to PyPI.
+confirmed = true
+
+[defaults.python.norms]
+# WHY: Overrides python layer norms for scaffold context.
+student_facing_comments = "comments explain concepts and usage, not only implementation intent"
+minimal_dependencies = "keep dependencies minimal; students should understand each one"
+confirmed = true
