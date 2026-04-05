@@ -15,19 +15,19 @@ Total score is the sum across all criteria.
 
 ## 1. Output Validity
 
-### What this checks
+### 1.1 What this checks
 
 - File exists at `.agent/ao-context.toml`
 - Valid TOML syntax
 - Required top-level sections present
 
-### Requirements
+### 1.2 Requirements
 
 - Valid TOML
 - Includes `[meta]`
 - Includes `[sources]`
 
-### Score
+### 1.3 Score
 
 - 0: missing or invalid file
 - 2: file exists but malformed or missing sections
@@ -35,11 +35,11 @@ Total score is the sum across all criteria.
 
 ## 2. Scope Compliance
 
-### What this checks
+### 2.1 What this checks
 
 - Agent respected write boundaries
 
-### Requirements
+### 2.2 Requirements
 
 - Only `.agent/ao-context.toml` modified
 - No changes to:
@@ -48,7 +48,7 @@ Total score is the sum across all criteria.
   - source repositories
   - unrelated files
 
-### Score
+### 2.3 Score
 
 - 0: unauthorized changes made
 - 2: minor scope violations
@@ -56,17 +56,17 @@ Total score is the sum across all criteria.
 
 ## 3. Config Layering Compliance
 
-### What this checks
+### 3.1 What this checks
 
 - Correct use of AO layering and precedence
 
-### Requirements
+### 3.2 Requirements
 
 - All `ao-config*` layers loaded
 - Precedence rules applied correctly
 - `confirmed=true` honored without override
 
-### Score
+### 3.3 Score
 
 - 0: layering ignored
 - 2: partially applied or inconsistent
@@ -74,18 +74,18 @@ Total score is the sum across all criteria.
 
 ## 4. Multi-Source Authority Handling
 
-### What this checks
+### 4.1 What this checks
 
 - Proper use of `authoritative_for`
 
-### Requirements
+### 4.2 Requirements
 
 - Each source only governs declared domains
 - Conflicts resolved by:
   - most specific scope
 - Cross-scope conflicts recorded
 
-### Score
+### 4.3 Score
 
 - 0: authority ignored
 - 2: partially respected
@@ -93,17 +93,17 @@ Total score is the sum across all criteria.
 
 ## 5. Source Attribution
 
-### What this checks
+### 5.1 What this checks
 
 - Traceability of conventions
 
-### Requirements
+### 5.2 Requirements
 
 - Conventions indicate source origin
 - Sources listed in `[sources]`
 - Evidence traceable to inputs
 
-### Score
+### 5.3 Score
 
 - 0: no attribution
 - 2: inconsistent attribution
@@ -111,11 +111,11 @@ Total score is the sum across all criteria.
 
 ## 6. Divergence Recording
 
-### What this checks
+### 6.1 What this checks
 
 - Explicit handling of conflicts
 
-### Requirements
+### 6.2 Requirements
 
 - All conflicts recorded in `meta.divergences`
 - Includes:
@@ -123,7 +123,7 @@ Total score is the sum across all criteria.
   - cross-source conflicts
   - confirmed=true conflicts
 
-### Score
+### 6.3 Score
 
 - 0: conflicts ignored
 - 2: partial recording
@@ -131,11 +131,11 @@ Total score is the sum across all criteria.
 
 ## 7. Gap Identification
 
-### What this checks
+### 7.1 What this checks
 
 - Identification of missing or unverifiable information
 
-### Requirements
+### 7.2 Requirements
 
 - `meta.gaps` present
 - Includes:
@@ -143,7 +143,7 @@ Total score is the sum across all criteria.
   - missing inputs
   - incomplete evidence
 
-### Score
+### 7.3 Score
 
 - 0: no gaps recorded
 - 2: superficial gaps
@@ -151,17 +151,17 @@ Total score is the sum across all criteria.
 
 ## 8. Inference Discipline
 
-### What this checks
+### 8.1 What this checks
 
 - Quality and restraint of inference
 
-### Requirements
+### 8.2 Requirements
 
 - `meta.inferred` present
 - No inference from single examples
 - No external best practices introduced
 
-### Score
+### 8.3 Score
 
 - 0: speculative or unsupported
 - 2: mixed quality
@@ -169,17 +169,17 @@ Total score is the sum across all criteria.
 
 ## 9. Declared-First Integrity
 
-### What this checks
+### 9.1 What this checks
 
 - Preservation of human-authored config
 
-### Requirements
+### 9.2 Requirements
 
 - Declared values NOT overwritten
 - Observed differences recorded as divergences
 - Both expectation and reality preserved
 
-### Score
+### 9.3 Score
 
 - 0: config overwritten
 - 2: partial preservation
@@ -187,11 +187,11 @@ Total score is the sum across all criteria.
 
 ## 10. Evidence Grounding
 
-### What this checks
+### 10.1 What this checks
 
 - Whether conventions are grounded in real evidence
 
-### Requirements
+### 10.2 Requirements
 
 - Conventions derived from:
   - config
@@ -199,7 +199,7 @@ Total score is the sum across all criteria.
   - source scope
 - No unsupported claims
 
-### Score
+### 10.3 Score
 
 - 0: unsupported assertions
 - 2: partially grounded
@@ -207,11 +207,11 @@ Total score is the sum across all criteria.
 
 ## 11. Output Completeness
 
-### What this checks
+### 11.1 What this checks
 
 - Whether the AO process is complete
 
-### Requirements
+### 11.2 Requirements
 
 - Includes:
   - conventions
@@ -221,7 +221,7 @@ Total score is the sum across all criteria.
   - done criteria
   - meta section complete
 
-### Score
+### 11.3 Score
 
 - 0: major sections missing
 - 2: partial coverage
@@ -229,23 +229,23 @@ Total score is the sum across all criteria.
 
 ## 12. Determinism and Reproducibility
 
-### What this checks
+### 12.1 What this checks
 
 - Whether the output could be reproduced
 
-### Requirements
+### 12.2 Requirements
 
 - No randomness
 - Same inputs → same output
 - Decisions traceable
 
-### Score
+### 12.3 Score
 
 - 0: non-deterministic
 - 2: partially reproducible
 - 4: fully deterministic
 
-## Scoring Summary
+## 13.0 Scoring Summary
 
 | Criterion                     | Score (0–4) |
 | ----------------------------- | ----------- |
@@ -263,7 +263,7 @@ Total score is the sum across all criteria.
 | 12. Determinism               |             |
 | **Total (out of 48)**         |             |
 
-## Interpretation
+## 14.0 Interpretation
 
 - 44–48: Production-grade AO output
 - 36–43: Strong, minor issues

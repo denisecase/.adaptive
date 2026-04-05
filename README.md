@@ -40,10 +40,10 @@ npm install -g @anthropic-ai/claude-code
 
 Terminal CLI that can inspect your repository, edit files, and run commands.
 You can authenticate with your ChatGPT account or an OpenAI API key.
-This is a good tool for generating or refreshing ao-context*.toml
+This is a good tool for generating or refreshing ao-context\*.toml
 from vendored skills and local repository evidence.
 NOT included with a Plus subscription ($20/month).
-API usage is billed separately from ChatGPT subscriptions 
+API usage is billed separately from ChatGPT subscriptions
 when you use an API key.
 
 Install:
@@ -68,7 +68,6 @@ Updates require an agent with:
 
 Chat-based interfaces are useful for reviewing and refining skills,
 but cannot execute updates because they do not operate on your local file system.
-
 
 ## Run Update (with Claude Code)
 
@@ -96,7 +95,7 @@ then follow prompt.md
 Read questions and answer or Hit Enter to accept default until done.
 After the response finishes:
 
-1. Review any new .agent/ao-context*.toml files.
+1. Review any new .agent/ao-context\*.toml files.
 
 ## Run Update (with OpenAI Codex)
 
@@ -129,8 +128,8 @@ Constraints:
 
 ### During execution
 
-- Answer clarification questions if prompted  
-- Otherwise press Enter to accept defaults  
+- Answer clarification questions if prompted
+- Otherwise press Enter to accept defaults
 
 The agent should:
 
@@ -162,9 +161,9 @@ git commit -m "chore: refresh agent context"
 
 ### Notes
 
-- `ao-config*.toml` is human-authored and authoritative  
-- `ao-context*.toml` is agent-generated and replaceable  
-- Do not allow agents to overwrite config files  
+- `ao-config*.toml` is human-authored and authoritative
+- `ao-context*.toml` is agent-generated and replaceable
+- Do not allow agents to overwrite config files
 - Regenerate context periodically or when conventions change
 
 ## Human-Written Config and Agent-Written Context

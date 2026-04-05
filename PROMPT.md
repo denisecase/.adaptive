@@ -25,8 +25,6 @@ This document must:
 - respect multi-source authority scoping (`authoritative_for`)
 - record divergences and gaps explicitly
 
-
-
 ## 2.0 Governing Specifications
 
 You MUST follow:
@@ -38,8 +36,6 @@ You MUST:
 
 - follow ACS: discovery → interpretation → selection → execution → validation
 - follow AO: layering, precedence, divergence recording
-
-
 
 ## 3.0 Inputs (Read-Only)
 
@@ -75,8 +71,6 @@ No target repository is specified.
 
 This is an org-level context synthesis.
 
-
-
 ## 4.0 Outputs (Write Scope)
 
 You MAY modify ONLY:
@@ -90,8 +84,6 @@ You MUST NOT modify:
 - any source repositories
 - any files outside `.agent/`
 
-
-
 ## 5.0 Core Rules
 
 ### 5.1 Separation of Responsibility
@@ -100,8 +92,6 @@ You MUST NOT modify:
 - `ao-context` = agent-derived, replaceable
 
 Never override config.
-
-
 
 ### 5.2 AO Layering and Precedence
 
@@ -119,8 +109,6 @@ Do NOT resolve conflicts silently.
 
 Record all conflicts in `meta.divergences`.
 
-
-
 ### 5.3 Multi-Source Authority (CRITICAL)
 
 Each source defines:
@@ -137,8 +125,6 @@ Rules:
   - record in `meta.divergences`
   - do not silently resolve
 
-
-
 ### 5.4 Declared-First Resolution
 
 When conflict exists:
@@ -152,8 +138,6 @@ You MUST:
 - never overwrite declared values
 - record divergence explicitly
 
-
-
 ### 5.5 Confirmed Fields
 
 - `confirmed = true` → accept without re-inference
@@ -161,15 +145,11 @@ You MUST:
 
 Conflicts with confirmed=true MUST still be recorded.
 
-
-
 ### 5.6 Evidence Discipline
 
 - infer only from repeated evidence
 - do not generalize from single examples
 - do not introduce external best practices
-
-
 
 ### 5.7 No Side Effects
 
@@ -181,8 +161,6 @@ You MUST NOT:
 - generate recommendations
 
 This is descriptive only.
-
-
 
 ## 6.0 Process
 
@@ -200,8 +178,6 @@ This is descriptive only.
    - divergences
    - gaps
 7. Generate `.agent/ao-context.toml`
-
-
 
 ## 7.0 Output Requirements
 
@@ -229,33 +205,29 @@ Output MUST NOT include:
 - reasoning
 - narrative text outside TOML comments
 
-
-
 ## 8.0 Completion Actions
 
 After generating `.agent/ao-context.toml`:
 
 1. Copy to:
 
-```
-evaluation/scenarios/multi-repo-authoritative-for/ao-context.toml
-```
+    ```text
+    evaluation/scenarios/multi-repo-authoritative-for/ao-context.toml
+    ```
 
 2. Write summary to:
 
-```
-evaluation/scenarios/multi-repo-authoritative-for/response.txt
-```
+    ```text
+    evaluation/scenarios/multi-repo-authoritative-for/response.txt
+    ```
 
 3. Score against:
 
-```
-evaluation/rubric.md
-```
+    ```text
+    evaluation/rubric.md
+    ```
 
 Include score table in `response.txt`.
-
-
 
 ## 9.0 Completion Criteria
 
@@ -267,8 +239,6 @@ Complete when:
 - inferred fields are marked
 - no unauthorized files changed
 
-
-
 ## 10.0 Failure Conditions
 
 Stop if:
@@ -278,8 +248,6 @@ Stop if:
 - evidence insufficient
 
 Record issues in `meta.gaps`.
-
-
 
 ## 11.0 Summary
 

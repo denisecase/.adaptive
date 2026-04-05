@@ -1,6 +1,4 @@
-# ============================================================
-# ao/ao-config.toml
-# ============================================================
+# .agent/ao-config.toml
 # WHY-FILE: Base defaults for Adaptive Onboarding.
 # REQ: These are declared conventions and take precedence over
 # observed conventions where explicitly stated.
